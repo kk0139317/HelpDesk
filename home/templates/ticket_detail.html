@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <h1>{{object.title}}</h1>
+    <p>Customer name: {{object.customer_full_name}}</p>
+    <p>Phone number: {{object.customer_phone_number}}</p>
+    <p>Email: <a href="mailto:{{object.customer_email}}">{{object.customer_email}}</a></p>
+    <p>Urgent: {{object.urgent_status}}</p>
+    <p>Resolved: {{object.completed_status}}</p>
+    <p>Assigned To: {{object.assigned_to.first_name}} {{object.assigned_to.last_name}}</p>
+    <p>Created: {{object.created_date}}</p>
+
+    <br>
+
+    <p>{{object.issue_description}}</p>
+</div>
+
+<div class="container d-flex mt-2 ">
+
+    {% if user.is_staff %}
+        {% if object.completed_status != True %}
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#markResolvedModal">Mark Resolved</button>
+        {% endif %}
+    {% endif %}
+    
+</div>
+
+{% if comments %}
+    <div class="container mt-4">
+
+        <h2>Note</h2>
+
+        {% for comment in comments %}
+        <div class="bg-light mt-2 mb-2">
+            <p class="text-secondary">@{{comment.user.username}} {{comment.created_date}}</p>
+            <p>{{comment.text}}</p>
+        </div>
+
+        {% endfor %}
+    </div>
+
+{% endif %}
+
+<!-- Modal -->
+
+
+
+
+
+
+{% endblock body %}
