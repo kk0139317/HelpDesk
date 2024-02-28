@@ -102,3 +102,6 @@ def verify_otp(request, user_id):
             return render(request, 'accounts/verify_otp.html', {'error': 'Invalid OTP', 'user_id': user_id})
 
     return render(request, 'accounts/verify_otp.html', {'user_id': user_id})
+
+def forgotpassword(request):
+    return render(request, "accounts/forgot-password.html")

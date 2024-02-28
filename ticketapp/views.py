@@ -187,7 +187,77 @@ def mark_ticket_as_resolved(request, id):
         chatdata = ChatApp(sender=sender, recever=recever, chat=chat)
         chatdata.save()
         subject = 'Issue resolved'
-        message = f'Good day.\n Please note your issue: \n{ticket.issue_description}\n has been resolved successfully\nRegards,\n ICT Helpdesk'
+        # message = f'Good day.\n Please note your issue: \n{ticket.issue_description}\n has been resolved successfully\nRegards,\n ICT Helpdesk'
+
+        message = f"""
+<html>
+<head>
+    <style>
+        body {{
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }}
+        .container {{
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }}
+        .header {{
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            text-align: center;
+        }}
+        .body {{
+            padding: 20px;
+            line-height: 1.5;
+            color: #333;
+        }}
+        .footer {{
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #999;
+        }}
+        .comment {{
+            background-color: #f9f9f9;
+            border-left: 3px solid #007bff;
+            padding: 10px;
+            margin: 20px 0;
+            font-style: italic;
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Issue Resolved</h1>
+        </div>
+        <div class="body">
+            <p>Good day,</p>
+            <p>Please note your issue:</p>
+            <p><strong>{ticket.issue_description}</strong></p>
+            <p>has been resolved successfully.</p>
+            <div class="comment">
+                <p><strong>Additional Comment:</strong><br>{comment}</p>
+            </div>
+            <p>Regards,<br>ICT Helpdesk</p>
+        </div>
+
+    </div>
+</body>
+</html>
+"""
+
+    
+
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [ticket.customer_email, ]
 
@@ -408,4 +478,4 @@ def ChatRoomapp(request):
         users = User.objects.all()
         data = {'users':users}
         return render(request, 'ticketapp/chatroom.html', data)
-    
+

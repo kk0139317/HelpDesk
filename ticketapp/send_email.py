@@ -20,7 +20,7 @@ def email_sending(subject, message, email_from, recipient_list):
     message["From"] = from_email
     message["To"] = to_email
     message["Subject"] = subject
-    message.attach(MIMEText(body, "plain"))
+    message.attach(MIMEText(body, "html"))
 
 # Send email
     try:
